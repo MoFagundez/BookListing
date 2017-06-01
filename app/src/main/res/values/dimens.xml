@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_margin">16dp</dimen>
+    <dimen name="image_size">72dp</dimen>
+    <dimen name="progress_bar">120dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+</resources>
