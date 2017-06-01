@@ -28,8 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
 
     public static final String LOG_TAG = Utils.class.getSimpleName();
-    String querySubject;
-    TextView emptyStateTextView;
+    private String querySubject;
     private ProgressBar progressBar;
     private BookAdapter mAdapter;
 
@@ -124,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Find a reference to the {@link ListView} in the layout
         ListView bookListView = (ListView) findViewById(R.id.list_view);
         // Check boolean parameter if connection is available
+        TextView emptyStateTextView;
         if (isConnected) {
             // Check if ArrayList of books is not null
             if (books != null) {
