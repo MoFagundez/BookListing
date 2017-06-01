@@ -158,14 +158,10 @@ final class Utils {
 
                 // Extract authors from JSONObject and create a JSONArray
                 String authors = JSON_NULL_RESULT;
-                try {
-                    JSONArray authorsArray = volumeInfo.getJSONArray(JSON_AUTHORS);
+                if (volumeInfo.has(JSON_AUTHORS)) {
                     // Loop through the authorsArray and assign values to the authors String using the method parseAuthors
-                    authors = parseAuthors(authorsArray);
-                } catch (JSONException e) {
-                    Log.e(LOG_TAG, "Problem parsing book information at Utils.parseBookInformation from Google API", e);
+                    authors = parseAuthors(volumeInfo.getJSONArray(JSON_AUTHORS));
                 }
-
                 // Download the small thumbnail and pass to a Bitmap object
                 Bitmap bitmap = null;
                 try {

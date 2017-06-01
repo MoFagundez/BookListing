@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String querySubject;
     private ProgressBar progressBar;
     private BookAdapter mAdapter;
+    TextView emptyStateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Create a ProgressBar object and finds a layout reference
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
+        // Create a TextView objec and finds a layout reference
+        emptyStateTextView = (TextView) findViewById(R.id.empty_text_view);
 
         final SearchView searchView = (SearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -68,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     private void performQuery() {
         clearAdapter();
-        // Make progressBar visible to inform user that the query is being processed
+        // Make progressBar visible and hide TextView to inform user that the query is being processed
         progressBar.setVisibility(View.VISIBLE);
+        emptyStateTextView.setVisibility(View.GONE);
         // Check whether or not network connectivity is available and update UI accordingly
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -100,7 +105,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<List<Book>> loader, List<Book> data) {
         // Update the UI passing an ArrayList of books and 'true' to the boolean value isConnected
         updateUi(data, true);
-        // Hide progress bar after UI is updated
+        // Hide progress bar and text after UI is updated
+        if (data != null) {
+            emptyStateTextView.setVisibility(View.GONE);
+        }
         progressBar.setVisibility(View.GONE);
     }
 
@@ -123,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Find a reference to the {@link ListView} in the layout
         ListView bookListView = (ListView) findViewById(R.id.list_view);
         // Check boolean parameter if connection is available
-        TextView emptyStateTextView;
         if (isConnected) {
             // Check if ArrayList of books is not null
             if (books != null) {
@@ -134,14 +141,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 bookListView.setAdapter(mAdapter);
             } else {
                 // Update the UI with no search results found
-                emptyStateTextView = (TextView) findViewById(R.id.empty_text_view);
                 emptyStateTextView.setText(R.string.empty_view_no_result);
+                emptyStateTextView.setVisibility(View.VISIBLE);
                 bookListView.setEmptyView(emptyStateTextView);
             }
         } else {
             // Update the UI with network not found
-            emptyStateTextView = (TextView) findViewById(R.id.empty_text_view);
             emptyStateTextView.setText(R.string.empty_view_no_connection);
+            emptyStateTextView.setVisibility(View.VISIBLE);
             bookListView.setEmptyView(emptyStateTextView);
             progressBar.setVisibility(View.GONE);
         }

@@ -2,4 +2,5 @@
     <string name="app_name">Book Listing</string>
     <string name="empty_view_no_result">Your search found no results. Try again.</string>
     <string name="empty_view_no_connection">Network not found. Please re-connect.</string>
+    <string name="empty_view_app_instruction">Welcome to Book Listing! \n \n Please use the bar on the top of your screen to perform a search.</string>
 </resources>
