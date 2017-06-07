@@ -21,7 +21,7 @@ class BookLoader extends AsyncTaskLoader<List<Book>> {
 
     private static final String QUERY_PREFIX = "https://www.googleapis.com/books/v1/volumes?q=";
     private static final String QUERY_SUFFIX = "&maxResults=20";
-    private String queryUrl = null;
+    private static String queryUrl = null;
 
     BookLoader(Context context, String querySubject) {
         super(context);

@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String querySubject;
     private ProgressBar progressBar;
     private BookAdapter mAdapter;
-    TextView emptyStateTextView;
+    private TextView emptyStateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Create a TextView objec and finds a layout reference
         emptyStateTextView = (TextView) findViewById(R.id.empty_text_view);
+
+        // Check if LoaderManager is null; if not, continues to run the worker thread
+        if (getLoaderManager().getLoader(0) != null) {
+            getLoaderManager().initLoader(0, null, MainActivity.this);
+        }
 
         final SearchView searchView = (SearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
